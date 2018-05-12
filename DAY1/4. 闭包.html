@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    * 闭包：函数执行的时候形成的私有作用域，保护里面的私有变量不受外界的干扰，这种保护机制我们叫做闭包
+    * 保存机制：函数执行结束后，里面的引用数据类型被外面的（变量或事件）所占用，形成了一个不销毁的私有作用域，里面是私有变量也就不会被销毁了。
+    *
+    * */
+    /*var a =1
+    function fn(){
+        var a = 2
+    }
+    fn()*/
+
+   /* // 同学A
+    (function () {
+        var a = 1
+        function fn1(){
+            console.log(a)
+        }
+        fn1()
+        window.fn1=fn1
+    })()
+    //同学B
+    (function () {
+        var a = 2
+        function fn1(){
+            window.fn1()
+            console.log(a)
+        }
+        fn1()
+    })()*/
+   //var i = 3
+   for(var i= 0 ;i<oDiv.length;i++){
+       (function (i) {
+           oDiv[i].onclick = function () {
+               console.log(i)
+           }
+       })(i)
+    };
+
+    for(var i= 0 ;i<oDiv.length;i++){
+        oDiv[i].onclick=(function (i){
+                return function (){
+                    console.log(i);
+                }
+            })(i)
+    }
+    // i =0 1 2 3
+    for(var i= 0 ;i<oDiv.length;i++){
+        oDiv[i].index = i;
+        oDiv[i].onclick = function (){
+            console.log(this.index);
+        }
+    }
+    //let 0 1 2
+    for(let i= 0 ; i<oDiv.length;i++){
+        //let i=2
+        oDiv[i].onclick = function (){
+            console.log(i);
+        }
+    }
+
+    // 有一个变量b ,有一个函数fn， 让fn每次执行的时候，b依次累加，（闭包的形式）
+
+    var fn = (function(){
+        var b = 1
+        return function () {
+            return b++
+        }
+    })()
+    fn();
+
+    var obj = {
+        b:1,
+        fn:function (){
+               return obj.b++
+        }
+    };
+    var fn = obj.fn
+    fn()
+
+</script>

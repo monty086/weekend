@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    /*
+    * 内置类
+    * 基本数据类型：
+    * Number 数字类
+    * String 字符串类
+    * Boolean 布尔类
+    * Null
+    * Undefined
+    * 引用数据类型：
+    * Object 对象类
+    *   Array 数组类
+    *   RegExp 正则类
+    *   Date 时间类
+    * Function 函数类
+    *
+    * */
+
+    var obj = {name:'zhufeng',age:8}
+    /*
+    * in:可以找到该对象的私有属性和共有属性
+    * hasOwnProperty:只能查找该对象上的私有属性的方法。
+    *
+    * */
+
+    //封装一个方法，判断该属性是否该对象的一个公有属性
+
+    var a = {name:'zhufeng'}
+    hasPubProperty('aabbcc',a)
+
+    function hasPubProperty (attr,obj){
+        return (attr in obj) && (obj.hasOwnProperty(attr)===false)
+    }
+
+</script>

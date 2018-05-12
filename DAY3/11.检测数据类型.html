@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    * 检测数据类型
+    * 1.constructor 插着当前实例是否有这个类名。缺点：null和undefined 没有类名
+    * 2.instanceof 检测数组和正则 返回值：true和false ，检测基本数据类型必须构造函数的方式创建
+    * 3. typeof 检测基本数据类型，其中null检测的'object' 缺点：数组和正则检测但是'object'
+    * 4.Object.prototype.toString.call(xxx) 通过Object原型上的toString方法改变this来检测该数据类型 ，返回是一个字符串'[object xxx]'
+    * */
+    typeof typeof []
+</script>
