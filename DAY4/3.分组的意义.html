@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    * () 分组的意义
+    * 1. 提高优先级
+    * 2. 分组引用
+    * 3. 分组捕获
+    * */
+
+    var reg = /^(18|19)$/
+    console.log(reg.test('18'));//true
+    console.log(reg.test('19')); //true
+    console.log(reg.test('1819')); // false
+    console.log(reg.test('1')); // false
+
+
+    var reg = /^([a-z])([a-z])\1\2([a-z])$/ // \1 代表引用第一个小括号的内容，字符串必须相同
+    console.log(reg.test('abcde')); // false
+    console.log(reg.test('ababc')); // true
+    console.log(reg.test('ab123')); // false
+    console.log(reg.test('abdda')); // false
+
+    var reg = /\w(\d+)/
+    var str = 'zhu2017feng2018'
+    console.log(reg.exec(str)); //["u2017", "2017", index: 2, input: "zhu2017feng2018", groups: undefined]
+
+</script>
