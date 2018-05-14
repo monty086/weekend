@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+</body>
+</html>
+<script>
+    /*
+    * 封装一个方法：封装一个myPush方法 ，返回值：改变后的数组，原数组改变
+    * */
+    Array.prototype.myPush =function () {
+        //arguments
+        //this
+        //[1,2,4] //=>arguments
+        for(var i=0;i<arguments.length;i++){
+            this[this.length] = arguments[i]
+        }
+        return this
+    }
+    var ary = [1,6]
+    ary.myPush(1,2,4)// [1,2,4]
+
+    var ary1 = [4,1,2,4,5,6];
+
+    ary1.sort(function (a, b) {
+        return a - b
+    }).myPush(1, 2, 4).reverse().pop();
+
+    //连续调用：如果我们向实现连续调用，前面一个方法必须return出来当前类的一个实例
+
+    //需求，实现 （1）.mypush(2).remove(1) = // 2
+    Number.prototype.mypush=function () {
+        //this // arguments[i]
+        if(!isNaN(arguments[0]))
+        return this + Number(arguments[0])
+    }
+    (1).mypush(1)
+
+
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    * apply作用
+    * 1. 让apply前面的方法执行
+    * 2. 第二个参数是一个数组，依次传入apply前面这个方法当中
+    * 3. 第一个参数改变apply前面方法当中的this
+    * */
+    Function.prototype.myApply =function () {
+        var obj = arguments[0],newAry=[];
+        newAry = arguments[1];
+        if(obj==undefined){
+            eval('this('+newAry+')')
+        }else{
+            obj.__proto__.fn = this;
+            // obj.fn()
+            // eval('obj.fn('+newAry+')')
+            (new Function('obj.fn('+newAry+')'))()
+            // (function () {
+            //     obj.fn()
+            //     this()
+            // })()
+            delete obj.__proto__.fn
+        }
+    }
+    function fn(n,m) {
+        console.log(this);
+        console.log(n + m); //4
+    }
+    var obj = {};
+    fn.myApply(null,[1,3,5])
+    fn.myApply(obj,[1,3,4])
+</script>

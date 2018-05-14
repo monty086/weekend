@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    Function.prototype.call =function () {
+        var obj = arguments[0],newAry=[];
+        for(var i=1;i<arguments.length;i++){
+            newAry[i-1] = arguments[i]
+        }
+        if(obj==undefined){
+            eval('this('+newAry+')')
+        }else{
+            obj.__proto__.fn = this
+            (new Function('obj.fn('+newAry+')'))()
+            delete obj.__prot__.fn
+        }
+    }
+    function fn(){
+
+    }
+    function fn3(){
+            var obj = arguments[0],newAry=[];
+            for(var i=1;i<arguments.length;i++){
+                newAry[i-1] = arguments[i]
+            }
+            if(obj==undefined){
+                eval('this('+newAry+')')
+            }else{
+                obj.__proto__.fn = this
+                (new Function('obj.fn('+newAry+')'))()
+                delete obj.__proto__.fn
+            }
+    }
+    var obj = function(){
+        console.log(this);//{1}
+    } //
+    fn.call({},)
+    fn.call.call.call(obj,1,2,4) //fn3.call(obj,1,2,4)
+
+    /*
+    * 两个及两个以上call出现时，让第一个参数执行，并且第一个参数必须是函数
+    * */
+</script>

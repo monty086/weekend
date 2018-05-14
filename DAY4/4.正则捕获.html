@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    /*
+    * 捕获：正则的捕获是使用exec来捕获的。捕获之前要进行验证，验证成功捕获出符合规则的字符串，验证不成功，返回null
+    * 返回的数组：1. 大正则捕获的内容 2. 分组捕获的内容，3. index：字符串当中开始捕获的索引，4.input：原字符串 ...
+    * 我们在正则当中加的小括号，不一定都是为了分组捕获，也有可能是为了提高优先级或者分组引用，如果我们只是为了加一个括号，我们需要添加一个？：只匹配不捕获,破坏分组捕获
+    *
+    * */
+
+    var reg = /\w(?:\d+)/
+    var str = 'zhu2017feng2018'
+    console.log(reg.exec(str)); //["u2017", "2017", index: 2, input: "zhu2017feng2018", groups: undefined]
+
+    var reg = /\d+/g;
+    var str = 'zhu2017feng2018zhufeng2019';
+    console.log(reg.lastIndex); // 0
+    console.log(reg.exec(str));// 2017
+    console.log(reg.lastIndex); // 7
+    console.log(reg.exec(str)); // 2018
+    console.log(reg.lastIndex); // 15
+    console.log(reg.exec(str)); //2019
+    console.log(reg.lastIndex); //26
+    console.log(reg.exec(str));//null
+
+    RegExp.prototype.execAll =function () {
+        var str = arguments[0]||''
+        var obj = this.exec(str)
+        var newAry = [];
+        if(!this.global){
+            return obj
+        }
+        while(obj){
+            newAry.push(obj[0]);
+            obj = this.exec(str)
+        }
+        return newAry
+    }
+    console.log(reg.execAll(str));
+    console.log(str.match(reg));   // Math
+    // match
+    // replace
+    var reg = /\d+/g;
+    var str = 'zhu2017feng2018zhufeng2019';
+    //["2017", index: 2, input: "zhu2017feng2018", groups: undefined]
+    console.log(str.replace(reg, '000'));// 第二个参数是什么替换什么
+    console.log(str.replace(reg, function ($1,$2) { // replace方法return什么就是替换什么
+        console.log($1);
+        console.log($2);
+        return '000'
+    }));
+
+    // search
+    var str = 'zhufeng1'
+    var reg = /\d/g
+    console.log(str.indexOf('1'));
+    console.log(str.search(reg)); //search方法用来找符合规则的索引
+    // split
+    var str = 'zhufeng1'
+    var reg = /\d/g
+    console.log(str.split('u'));//["zh", "feng1"]
+    console.log(str.split(reg));//["zhufeng",""]
+
+
+</script>

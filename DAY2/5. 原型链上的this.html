@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+</body>
+</html>
+<script>
+    /*
+    * 原型链：是一种查找机制，先找自己身上有没有私有属性，如果有直接调用，如果没有就继续向上找，如果上级还没有，直到找到基类Object ，如果还没有直接报undefined
+    *
+    * */
+    var name = 'zhufeng'
+    function Fn (){
+        this.name = Fn.__proto__.name //Fn.__proto__ => undefined
+    }
+    Fn.prototype.name = 'hello'
+    var f1 = new Fn
+    // f1.name = 'zhufengpeixun'
+    console.log(f1.name)//undefined
+    Fn.prototype.__proto__ // 直接指向基类
+
+    f1.hasOwnProperty(name)
+    Fn.prototype.hasOwnProperty('constructor')
+    console.log(f1.constructor);
+
+    var ary = new Array
+    ary.push()
+    ary.hasOwnProperty()
+    var ary = [1]
+    var ary2 = [2]
+
+    // 1. 先找私有属性
+    // 2. 私有属性没有，直接找到公有属性，公有属性没有，直接找基类Object
+</script>

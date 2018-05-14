@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    /*
+    * 栈内存：俗称（作用域）浏览器加载的时候形成的全局作用域，window 又叫做栈内存
+    * 堆内存：存放的是引用数据类型的值：对象存的是键值对，函数存是代码字符串
+    *
+    * 释放栈内存：释放全局作用域，关闭浏览器可以实现，释放私有作用域：让该函数执行结束，浏览器会在空闲的时候将其释放
+    * 不销毁的作用域：当前作用域执行结束后，作用域当中有引用数据类型的值被外界（变量或事件）所占有，导致当前作用域不被释放，形成一个不销毁的作用域，里面的变量也不会销毁。
+    * 堆内存：只能手动将其释放，将堆内存指向的变量值手动赋值为null。指向空指针
+    * */
+
+    oDiv.onclick =(function (){
+        return function(){
+
+        }
+    })()
+
+    var obj = {
+        fn:(function (){
+            var a ;
+            return function () {
+
+            }
+        })()
+    }
+
+    var f = obj.fn
+
+
+
+
+</script>
