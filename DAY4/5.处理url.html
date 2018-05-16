@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var str = 'https://www.baidu.com?source1=js&source2=jq&source3=www'
+
+    function arySplit (str){
+        var strSearch = str.split('?')[1];
+        let ary = strSearch.split('&')
+        var obj = {}
+        ary.forEach((item)=>{
+            var key = item.split('=')
+            obj[key[0]]=key[1]
+        })
+        return obj
+    }
+    console.log(arySplit(str));
+
+    function strEegExp(str){
+        var reg = /[?&](\w+)=(\w+)/g,obj ={};
+        str.replace(reg,function () {
+            var ary1 = arguments[1],ary2=arguments[2];
+            obj[ary1]= ary2
+        })
+        return obj
+    }
+    console.log(strEegExp(str));
+
+    function strSplit(str){
+        let arr = str.split(/[?&=]/)
+        arr.shift()
+        let obj = {} ;
+        for(var i=0;i<arr.length;i+=2){
+            obj[arr[i]]=arr[i+1]
+        }
+        return obj
+    }
+    console.log(strSplit(str));
+
+
+
+</script>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>珠峰培训2017-10JS</title>
+    <style>
+        #form_content {
+            width: 660px;
+            margin: 0 auto;
+            position: relative;
+            border: 1px dashed #c9c9c9;
+            padding: 20px 0;
+        }
+
+        #form_content .dc h3 {
+            text-align: center;
+            font-size: 30px;
+            color: #2b7dd1;
+        }
+
+        #form_content b {
+            display: inline-block;
+            height: 40px;
+            line-height: 40px;
+            margin-left: 150px;
+            font-size: 20px;
+            color: #807c7f;
+        }
+
+        #form_content input {
+            display: inline-block;
+            height: 34px;
+            width: 200px;
+            border-radius: 2px;
+            margin-left: 60px;
+            padding-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="form_content">
+    <form  id="userInfo" >
+        <div class="dc"  >
+            <h3>用户信息页面</h3>
+        </div>
+        <div class="dc">
+            <b>用户昵称</b>
+            <input type="text" name="user"/>
+        </div>
+        <div class="dc">
+            <b>用户密码</b>
+            <input type="text" name="pw" />
+        </div>
+        <div class="dc">
+            <b>个人邮箱</b>
+            <input type="email" name="email" />
+        </div>
+        <div class="dc">
+            <b>个人主页</b>
+            <input type="url" name="url"/>
+        </div>
+        <div class="dc">
+            <b>联系电话</b>
+            <input type="text" name="tel"/>
+        </div>
+        <div class="dc">
+            <b>你的年龄</b>
+            <input type="text" name="age" min="12" max="65"/>
+        </div>
+        <div class="dc">
+            <b>出生日期</b>
+            <input type="text" name="date"/>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+<script>
+    let url = window.decodeURIComponent(location.href);
+    console.log(url);
+
+    function getURl(url) {
+
+        // var url = url.split('?')[1];
+        // var reg = /(\w+)=(\w+)/g;
+        // var obj = {}
+        // url.replace(reg,function (...arg) {
+        //     obj[arg[1]] = arg[2]
+        // })
+
+        var url  = url.split('?')[1];
+        let ary = url.split('&')
+        let obj = {}
+        for(var i=0;i<ary.length;i++){
+            obj[ary[i].split('=')[0]]=ary[i].split('=')[1]
+        }
+        return obj
+    }
+
+    let obj = getURl(url)
+    console.log(obj);
+    for (var key in obj){
+        document.getElementsByName(key)[0].value = obj[key]
+        document.getElementsByName(key)[0].disabled =true;
+    }
+</script>
