@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-left: -50px;
+            margin-top: -50px;
+            border: 10px solid white;
+        }
+        #inner{
+            width: 300px;
+            height: 300px;
+            background: blue;
+            position: absolute;
+            top:50%;
+            left:50%;
+            margin-left: -150px;
+            margin-top: -150px;
+            border:10px solid white;
+        }
+        #outer{
+            position: relative;
+            width: 500px;
+            height: 500px;
+            background: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="outer">
+        我是outer
+        <div id="inner">
+            我是inner
+            <div id="box">我是box</div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script>
+    /*
+    * offset系列
+    * offsetWidth: 当前元素的clientWidth加外边框的距离(左右)
+    * offsetHeight:  当前元素的clientHeight加外边框的距离(上下)
+    *
+    * offsetParent: 当前元素的父级参照物：如果父级参照物没有定位，统一是body，如果有定位，就是该定位父级参照物
+    * offsetLeft: 当前元素的外边距到当前元素父级参照物内边距的左偏移量
+    * offsetTop: 当前元素的外边距到当前元素父级参照物内边距的上偏移量
+    * */
+
+    /*
+    * 垂直居中：
+    * 1. position：
+    * 2. flex
+    *
+    * */
+
+    //封装一个方法实现当前元素到body的距离
+    function offset (ele){
+        let L = ele.offsetLeft;
+        let T = ele.offsetTop;
+        let parent = ele.offsetParent;
+        while (parent){
+            //处理一下兼容性
+            if(!/MEIE 8/i.test(window.navigator.userAgent)){
+                L+= parent.clientLeft
+                T+= parent.clientTop
+            }
+            L+= parent.offsetLeft
+            T+= parent.offsetTop
+            parent = parent.offsetParent
+        }
+        return {left:L,top:T}
+    }
+
+    console.log(offset(box).left);
+</script>

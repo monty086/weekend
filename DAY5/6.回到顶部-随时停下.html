@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #box{
+            width: 100%;
+            height: 800%;
+            background: -webkit-linear-gradient(red,orange,yellow,green,lightblue,blue,purple);
+        }
+        #up{
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #fff;
+            position: fixed;
+            bottom:100px;
+            right:100px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            user-select: none;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <div id="up">UP</div>
+    </div>
+</body>
+</html>
+<script src="utils.js"></script>
+<script>
+    /*
+    * 1. 默认情况下up消失，当划过一屏的时候，up显示
+    * 2. 点击up，匀速回到顶部
+    * 3. 回到顶部的途中，我希望能够随时停下来
+    * 4. 在规定的时间内回到顶部
+    * */
+
+    let winH = utils.win('clientHeight');
+    let timer = null;
+    let bok = false
+
+    //1
+    window.onscroll = fn
+    function fn () {
+        if(bok){
+            clearInterval(timer)
+        }
+        bok=true
+        let winT = utils.win('scrollTop')
+        if(winT>=winH){
+           up.style.display='block'
+        }else{
+            up.style.display='none'
+        }
+    }
+    //2 3 4
+    up.onclick = function () {
+        let winT = utils.win('scrollTop');
+        let duration = 2000;
+        let interval = 50;
+        let step = winT/2000*50;
+          timer = setInterval(()=>{
+            if(winT<=0){
+                clearInterval(timer);
+                utils.win('scrollTop',0)
+                return
+            }
+            winT-=step;
+            utils.win('scrollTop',winT);
+            bok=false
+        },interval)
+    }
+
+
+
+
+</script>

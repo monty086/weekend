@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #box{
+            width: 500.55px;
+            height: 100px;
+            /*background: red;*/
+            /*border:100px solid blue;*/
+        }
+        #outer{
+            width:500px;
+            overflow-x: scroll;
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+<body>
+<div id="outer">
+    <div id="box">
+        央视网消息（新闻联播）：习近平总书记指出，我们要以更大的力度、更实的措施推进生态文明建设，加快形成绿色生产方式和生活方式，着力解决突出环境问题，使我们的国家天更蓝、山更绿、水更清、环境更优美，让绿水青山就是金山银山的理念在祖国大地上更加充分地展示出来。党的十八大以来，绿水青山就是金山银山的理念深入人心，把生态文明建设融入经济、政治、文化和社会建设的全过程稳步推进，一幅美丽中国新图景正在中华大地上徐徐展开。
+    </div>
+</div>
+
+</body>
+</html>
+<script src="utils.js"></script>
+<script>
+    /*
+    * client系列
+    * clientWidth:当前元素可视区域的宽度，不包括滚动条和边线
+    * clientHeight: 当前元素可视区域的高度，不包括滚动条和边线
+    * clientLeft: 当前元素的左边框的宽度
+    * clientTop: 当前元素上边框的宽度
+    *
+    *
+    * */
+    /*
+    * 特点：
+    * 1. 所取的值是一个整数，没有单位
+    * 2. 默认会进行四舍五入
+    * 3. 不可以进行修改，scroll（top+left）可以进行修改
+    * */
+
+    document.documentElement.clientWidth || document.body.clientWidth;
+    document.documentElement.clientHeight || document.body.clientHeight;
+
+    function win(attr,value) {//第一个参数：属性名，第二个参数：设置的属性值
+        if(value == undefined){ // 当实参没有传第二个参数的时候，我们要获取当前窗口的属性
+            return document.documentElement[attr] || document.body[attr];
+        }
+        document.documentElement[attr]=value;
+        document.body[attr]=value
+    }
+    win('clientWidth',100)
+
+</script>

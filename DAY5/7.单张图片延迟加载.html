@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #box{
+            width: 300px;
+            height: 300px;
+            background: url("loading.gif") no-repeat center;
+            background-size: cover;
+            margin: 900px auto;
+            border:1px solid #666
+        }
+        #box img{
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="box">
+        <img src="" alt="" realImg="photo.jpg">
+    </div>
+</body>
+</html>
+<script src="utils.js"></script>
+<script>
+    /*
+    * 延迟加载又名懒加载，在性能优化方面会经常用到，主要用与pc大量图片网站，以及移动端流量限制问题。
+    * */
+
+    let box =document.getElementById('box');
+    let img = document.getElementsByTagName('img')[0]
+    let picTop = utils.offset(box).top;
+    let picH =  box.offsetHeight;
+
+    let winH = utils.win('clientHeight');
+
+    window.onscroll =function () {
+        if(img.load){
+            return
+        }
+        let winTop = utils.win('scrollTop');//要实时获取浏览器滚动的高度
+        if(winTop+winH>=picTop+picH){// 图片的高度+图片距离body顶部的距离小于浏览器窗口的高度+浏览器滚动后的高度。证明图片以及完全暴露在浏览器中，我们开始让图片进行加载
+           let newImg = new Image() // 通过构造函数的方式创建一个图片
+           let url = img.getAttribute('realImg');
+           newImg.src = url
+            newImg.onload = function () {// 新的图片加载成功之后，在把地址还给老的图片
+                img.src = this.src;
+                fadeIn(img)
+                img.load = true
+                newImg = null
+            }
+        }
+    }
+    function fadeIn(ele) {
+        let opacity = Number(window.getComputedStyle(ele)['opacity']) ;
+        let timer = setInterval(()=>{
+            if(opacity>=1){
+               clearInterval(timer);
+                ele.style.opacity=1
+               return
+            }
+            opacity+=0.01
+            ele.style.opacity=opacity
+        },50)
+    }
+
+
+
+
+
+</script>

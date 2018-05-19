@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            list-style: none;
+        }
+        li{
+           width: 100%;
+           margin:10px;
+           height: 70px;
+           border-bottom: 1px dashed rgba(212, 212, 212, 0.31);
+        }
+        li #lazy{
+            width: 70px;
+            height: 60px;
+            background: url("img/loading.gif") no-repeat center;
+            background-size: cover;
+            float: left;
+            margin-right:10px;
+        }
+        li .content p{
+            line-height: 3;
+            font-size: 14px;
+        }
+        li #lazy img{
+            width: 70px;
+            height: 60px;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+<!--https://www.easy-mock.com/mock/5ab497e674cb3a490381870f/api/news/list-->
+<ul>
+    <!--<li>-->
+        <!--<div id="lazy">-->
+            <!--<img src="" alt="">-->
+        <!--</div>-->
+        <!--<div class="content">-->
+            <!--<h3>十八大以来习近平关心生态文明建设纪实</h3>-->
+            <!--<p>原标题：[原声]望、闻、问、切、治——十八大以来总书记关心生态文明建设纪实</p>-->
+        <!--</div>-->
+    <!--</li>-->
+</ul>
+</body>
+</html>
+<script src="utils.js"></script>
+<script>
+    /*
+    * 1. 获取元素
+    * 2. 获取数据通过ajax
+    * 3. 绑定到标签
+    * 4. 循环图片并进行延迟加载
+    * 5. 渐变显示图片
+    *
+    * */
+    //1 获取元素
+    let oUl = document.getElementsByTagName('ul')[0];
+    let url = "https://www.easy-mock.com/mock/5ab497e674cb3a490381870f/api/news/list";
+    let data = null;
+    let str = '';
+    let imgs = document.getElementsByTagName('img');
+
+    //2 获取数据
+    let xhr = new XMLHttpRequest();
+    xhr.open('get',url,false);
+    xhr.onreadystatechange = function () {
+        if(xhr.readyState==4 && /^2\d{2}$/.test(xhr.status)){
+            data =utils.json(xhr.responseText)
+        }
+    }
+    xhr.send();
+
+    //3.绑定到标签
+    function bindHtml() {
+        data.forEach((item)=>{
+            str+=`<li>
+                    <div id="lazy">
+                        <img src="" alt="" realImg="./img/${item.img}">
+                    </div>
+                    <div class="content">
+                        <h3>${item.title}</h3>
+                        <p>${item.desc}</p>
+                    </div>
+            </li>`
+        })
+        oUl.innerHTML=str
+    }
+    bindHtml()
+    bindHtml()
+
+    //4. 循环图片并进行延迟加载
+    lazycodeImg()
+    function lazycodeImg() {
+        for(let i=0;i<imgs.length;i++){
+            lazyImg(i)
+        }
+    }
+    window.onscroll = lazycodeImg
+    function lazyImg(i){
+        //图片高度+图片距离body的上偏移量
+        //当前屏幕的高度+滚动后的高度
+        let curImg = imgs[i];
+        if(curImg.load)return;
+        let curImgH = curImg.offsetHeight;//图片自身的高度
+        let curImgTop = utils.offset(curImg).top;//当前图片距离body的上偏移量
+        let winH = utils.win('clientHeight');
+        let winT = utils.win('scrollTop')
+        if(winH+winT>=curImgH+curImgTop){
+            let newImg = new Image();
+            let url = curImg.getAttribute('realImg');
+            newImg.src = url;
+            newImg.onload = function () {
+                curImg.src = this.src;
+                fadeIn(curImg)
+                curImg.load =true;//通过设置true，可以让程序不重复执行
+                newImg=null;//图片用完之后可以手动删除
+            }
+        }
+    }
+
+    // 5.渐变显示
+    function fadeIn(ele) {
+        clearInterval(timer)// 每次把上一个定时器清除
+        let opacity = Number(window.getComputedStyle(ele)['opacity']);
+         var timer = setInterval(()=>{
+            if(opacity>=1){
+                clearInterval(timer);
+                ele.style.opacity=1
+                return
+            }
+            opacity+=0.01;
+            ele.style.opacity=opacity
+        },50)
+    }
+
+</script>
